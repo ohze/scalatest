@@ -91,6 +91,14 @@ trait DottyBuild { this: BuildCommons =>
                                        |import Matchers._""".stripMargin,
       libraryDependencies ++= scalaXmlDependency(scalaVersion.value),
       libraryDependencies ++= scalatestLibraryDependencies,
+      // https://github.com/sbt/sbt/issues/2205#issuecomment-144375501
+      mappings in (Compile, packageSrc) ++= { // publish generated sources
+        val srcs = (managedSources in Compile).value
+        val sdirs = (managedSourceDirectories in Compile).value
+        val base = baseDirectory.value
+        import Path._
+        (srcs --- sdirs --- base) pair (relativeTo(sdirs) | relativeTo(base) | flat)
+      },
       sourceGenerators in Compile += {
         Def.task {
           GenScalaTestDotty.genScala((sourceManaged in Compile).value, version.value, scalaVersion.value) ++
