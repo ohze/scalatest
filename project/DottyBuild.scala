@@ -27,7 +27,7 @@ trait DottyBuild { this: BuildCommons =>
     .settings(scalacticDocSettings: _*)
     .settings(
       projectTitle := "Scalactic",
-      organization := "org.scalactic",
+      organization := "com.sandinh",
       moduleName := "scalactic",
       initialCommands in console := "import org.scalactic._",
       packageManagedSources,
@@ -95,7 +95,7 @@ trait DottyBuild { this: BuildCommons =>
     .settings(dottySettings: _*)
     .settings(
       projectTitle := "ScalaTest",
-      organization := "org.scalatest",
+      organization := "com.sandinh",
       moduleName := "scalatest",
       initialCommands in console := """|import org.scalatest._
                                        |import org.scalactic._
