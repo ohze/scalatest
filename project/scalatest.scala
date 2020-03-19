@@ -6,7 +6,7 @@ import scala.io.Source
 import com.typesafe.sbt.osgi.OsgiKeys
 import com.typesafe.sbt.osgi.SbtOsgi
 import com.typesafe.sbt.osgi.SbtOsgi.autoImport._
-import com.typesafe.sbt.SbtPgp.autoImport._
+//import com.typesafe.sbt.SbtPgp.autoImport._
 
 //import sbtcrossproject.CrossPlugin.autoImport._
 import org.portablescala.sbtplatformdeps.PlatformDepsPlugin.autoImport._
@@ -133,9 +133,9 @@ object ScalatestBuild extends BuildCommons with DottyBuild with NativeBuild with
           </developer>
         </developers>
       ),
-    credentials += getNexusCredentials,
-    pgpSecretRing := file(getGPGFilePath),
-    pgpPassphrase := getGPGPassphase
+//    credentials += getNexusCredentials,
+//    pgpSecretRing := file(getGPGFilePath),
+//    pgpPassphrase := getGPGPassphase
   )
 
   def sharedSettings: Seq[Setting[_]] = 
