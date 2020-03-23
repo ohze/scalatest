@@ -28,6 +28,7 @@ trait DottyBuild { this: BuildCommons =>
     .settings(
       projectTitle := "Scalactic",
       organization := "com.sandinh",
+      version := "3.1.1-dottybug8581",
       moduleName := "scalactic",
       initialCommands in console := "import org.scalactic._",
       sourceGenerators in Compile += {

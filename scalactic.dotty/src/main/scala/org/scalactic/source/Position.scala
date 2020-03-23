@@ -69,10 +69,12 @@ object Position {
   private def genPosition(implicit qctx: QuoteContext): Expr[Position] = {
     import qctx.tasty._
 
-    val file = rootPosition.sourceFile
+    val rootPos = rootPosition
+    val file = rootPos.sourceFile
     val fileName: String = file.jpath.getFileName.toString
     val filePath: String = if (showScalacticFillFilePathnames) file.toString else Resources.pleaseDefineScalacticFillFilePathnameEnvVar
-    val lineNo: Int = rootPosition.startLine
+    // https://github.com/lampepfl/dotty/issues/8581
+    val lineNo: Int = if (rootPos.exists) rootPos.startLine else -1
     '{ Position(${Expr(fileName)}, ${Expr(filePath)}, ${Expr(lineNo)}) }
   }
 
