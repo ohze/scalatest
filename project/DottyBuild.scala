@@ -13,7 +13,15 @@ trait DottyBuild { this: BuildCommons =>
 
   // List of available night build at https://repo1.maven.org/maven2/ch/epfl/lamp/dotty-compiler_0.14/
   // lazy val dottyVersion = dottyLatestNightlyBuild.get
-  lazy val dottyVersion = "0.23.0-RC1"
+  lazy val dottyVersion = "0.24.0-bin-20200324-6cd3a9d-NIGHTLY"
+//  lazy val dottyVersion = "0.23.0-RC1"
+  private lazy val customBuildVersion = version := {
+    val isDottyNightly = dottyVersion.length > 10 // // "0.xx.0-bin".length
+    val suffix =
+      if (isDottyNightly) "-dotty" + dottyVersion.substring(10)
+      else ""
+    s"3.1.1$suffix"
+  }
   lazy val dottySettings = List(
     scalaVersion := dottyVersion,
     libraryDependencies := libraryDependencies.value.map(_.withDottyCompat(scalaVersion.value)),
@@ -28,7 +36,7 @@ trait DottyBuild { this: BuildCommons =>
     .settings(
       projectTitle := "Scalactic",
       organization := "com.sandinh",
-      version := "3.1.1-dottybug8581",
+      customBuildVersion,
       moduleName := "scalactic",
       initialCommands in console := "import org.scalactic._",
       sourceGenerators in Compile += {
@@ -86,6 +94,7 @@ trait DottyBuild { this: BuildCommons =>
     .settings(
       projectTitle := "ScalaTest",
       organization := "com.sandinh",
+      customBuildVersion,
       moduleName := "scalatest",
       initialCommands in console := """|import org.scalatest._
                                        |import org.scalactic._
