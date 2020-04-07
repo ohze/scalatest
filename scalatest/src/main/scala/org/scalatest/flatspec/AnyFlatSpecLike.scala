@@ -1562,17 +1562,17 @@ import resultOfStringPassedToVerb.verb
         new ResultOfStringPassedToVerb(verb, rest) {
 
           def is(testFun: => PendingStatement): Unit = {
-            registerTestToRun(verb.trim + " " + rest.trim, "is", List(), () => { testFun; succeed }, pos)
+            registerTestToRun(this.verb.trim + " " + this.rest.trim, "is", List(), () => { testFun; succeed }, pos)
           }
           // Note, won't have an is method that takes fixture => PendingStatement one, because don't want
           // to say is (fixture => pending), rather just say is (pending)
           def taggedAs(firstTestTag: Tag, otherTestTags: Tag*) = {
             val tagList = firstTestTag :: otherTestTags.toList
-            new ResultOfTaggedAsInvocation(verb, rest, tagList) {
+            new ResultOfTaggedAsInvocation(this.verb, this.rest, tagList) {
               // "A Stack" should "bla bla" taggedAs(SlowTest) is (pending)
               //                                               ^
               def is(testFun: => PendingStatement): Unit = {
-                registerTestToRun(verb.trim + " " + rest.trim, "is", tags, () => { testFun; succeed }, pos)
+                registerTestToRun(this.verb.trim + " " + this.rest.trim, "is", this.tags, () => { testFun; succeed }, pos)
               }
             }
           }
