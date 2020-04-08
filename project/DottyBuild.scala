@@ -39,6 +39,7 @@ trait DottyBuild { this: BuildCommons =>
       customBuildVersion,
       moduleName := "scalactic",
       initialCommands in console := "import org.scalactic._",
+      packageSrcGenerated,
       sourceGenerators in Compile += {
         Def.task{
           // From scalactic-macro
@@ -87,6 +88,16 @@ trait DottyBuild { this: BuildCommons =>
     )
   )
 
+  // https://github.com/sbt/sbt/issues/2205#issuecomment-144375501
+  private lazy val packageSrcGenerated =
+    mappings in (Compile, packageSrc) ++= { // publish generated sources
+      val srcs = (managedSources in Compile).value
+      val sdirs = (managedSourceDirectories in Compile).value
+      val base = baseDirectory.value
+      import Path._
+      (srcs --- sdirs --- base) pair (relativeTo(sdirs) | relativeTo(base) | flat)
+    }
+
   lazy val scalatestDotty = Project("scalatestDotty", file("scalatest.dotty"))
     .enablePlugins(SbtOsgi)
     .settings(sharedSettings: _*)
@@ -101,14 +112,7 @@ trait DottyBuild { this: BuildCommons =>
                                        |import Matchers._""".stripMargin,
       libraryDependencies ++= scalaXmlDependency(scalaVersion.value),
       libraryDependencies ++= scalatestLibraryDependencies,
-      // https://github.com/sbt/sbt/issues/2205#issuecomment-144375501
-      mappings in (Compile, packageSrc) ++= { // publish generated sources
-        val srcs = (managedSources in Compile).value
-        val sdirs = (managedSourceDirectories in Compile).value
-        val base = baseDirectory.value
-        import Path._
-        (srcs --- sdirs --- base) pair (relativeTo(sdirs) | relativeTo(base) | flat)
-      },
+      packageSrcGenerated,
       sourceGenerators in Compile += {
         Def.task {
           GenScalaTestDotty.genScala((sourceManaged in Compile).value, version.value, scalaVersion.value) ++
