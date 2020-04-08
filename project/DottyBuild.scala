@@ -13,7 +13,7 @@ trait DottyBuild { this: BuildCommons =>
 
   // List of available night build at https://repo1.maven.org/maven2/ch/epfl/lamp/dotty-compiler_0.14/
   // lazy val dottyVersion = dottyLatestNightlyBuild.get
-  lazy val dottyVersion = "0.24.0-bin-20200406-eff5496-NIGHTLY"
+  lazy val dottyVersion = "0.24.0-bin-20200407-2352d90-NIGHTLY"
 //  lazy val dottyVersion = "0.23.0-RC1"
   private lazy val customBuildVersion = version := {
     val isDottyNightly = dottyVersion.length > 10 // // "0.xx.0-bin".length
