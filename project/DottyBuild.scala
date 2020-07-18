@@ -36,7 +36,7 @@ trait DottyBuild { this: BuildCommons =>
     .settings(scalacticDocSettings: _*)
     .settings(
       projectTitle := "Scalactic",
-      organization := "org.scalactic",
+      organization := "com.sandinh",
       moduleName := "scalactic",
       initialCommands in console := "import org.scalactic._",
       packageManagedSources,
@@ -92,7 +92,7 @@ trait DottyBuild { this: BuildCommons =>
     .settings(dottySettings: _*)
     .settings(
       projectTitle := "ScalaTest Core Dotty",
-      organization := "org.scalatest",
+      organization := "com.sandinh",
       moduleName := "scalatest-core",
       initialCommands in console := """|import org.scalatest._
                                        |import org.scalactic._
@@ -170,7 +170,7 @@ trait DottyBuild { this: BuildCommons =>
       .settings(dottySettings: _*)
       .settings(
         projectTitle := title,
-        organization := "org.scalatest",
+        organization := "com.sandinh",
         moduleName := name,
         packageManagedSources,
         publishArtifact in (Compile, packageDoc) := false, // Temporary disable publishing of doc, can't get it to build.
